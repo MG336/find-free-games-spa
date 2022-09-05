@@ -1,19 +1,15 @@
 <template>
         <div class="con-wrap">
-            <div class="container border">
-                <div class="con-cards">
-                    <template v-for="item in gamesArr" :key="item.id">
-                       
-                        <div class="card con-cards__card"  >
-                            <a class="con-cards__link" href="#"></a>
+            <div class="container">
+                <div class="con-cards" @click="$emit('gameSelect', $event)">
+                    <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
+                        <div class="card con-cards__card">
+                            <a class="con-cards__link" href="#" :data-id="item.id"></a>
                             <img :src="item.thumbnail" class="card-img-top" alt="...">
                             <div class="card-body">
                                 
                                 <h5 class="card-title">{{item.title}}</h5>
                                 <p class="card-text">{{item.short_description}}</p>
-                                
-
-                                <!-- <a href="#" class="btn btn-primary">Перейти куда-нибудь</a> -->
                             </div>
                             <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Genre: {{item.genre}}</li>
@@ -21,23 +17,32 @@
                                     <li class="list-group-item">Platform: {{item.platform}}</li>
                             </ul>
                         </div>
-                       
                     </template>
                 </div>
+                       
+                       
+                <div class="container d-flex justify-content-center mt-4 mb-5">
+                <button type="button" class="btn btn-light" @click="pages+=12">Show More</button>
+                </div>
             </div>
+            
         </div>
 
             
   </template>
   <script>
 // import { throwStatement } from '@babel/types';
-
+/* eslint-disable vue/no-unused-components */
       export default {
             name: 'ContantComp',
             props: {
                 gamesUrl: String,
                 filtr:String,
+                showPage:Number,
             },
+                
+            emits:["gameSelect"],
+            
             data(){
                 return {
                     params: {
@@ -53,37 +58,25 @@
                             'X-RapidAPI-Key': '149ec3339amsha0518ee016e5238p1b47fdjsn88e4cd783202',
                             'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
                         }
-                    }
+                    },
                     
+                    pages: 3
                 }
             },
             methods: {
                 async getJsonFromServer(){
-                        console.log(this.filtr)
-                        let filtrArr = [...this.filtr]
-                        filtrArr.unshift('?')
-                        console.log(filtrArr.join(''))
-                        // let url = this.url + filtrArr.join('')
-                        let url = this.url + '?' + this.filtr
-
+                        let url = this.url + this.filtr
+                        console.log('11111111111',url)
                         await fetch(url, this.options)
                         .then(res =>{return res.json()})
-                        .then(res => res.slice(0,12))
+                        // .then(res => res.slice(0,12))
                         .then(res => this.gamesArr.push(...res))
-                          
+                        // .then(res => this.gamesArr.push(...res))
                     },
+                },
 
-            watch: {
-                async filtr(){
-                    console.log('test')
-                    let url = this.url + this.filtr
-                    await fetch(url, this.options)
-                        .then(res =>{return res.json()})
-                        .then(res => res.slice(0,12))
-                        .then(res => this.gamesArr.push(...res))
-                }
-            }
-            },
+                          
+
             
   created(){
     this.getJsonFromServer()

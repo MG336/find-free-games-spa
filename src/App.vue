@@ -1,11 +1,13 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <div>
+  <div class="container">
     <!-- dropMenu -->
-    <HeaderComp/>
-    <filter-nav @filtr-result="getDropMenu"/>
-    <ContantComp :key="updateKey" :filtr="filtr"/>
+    <header-comp class="mb-3" />
+    <filter-nav  class="mb-2" @filtr-send="getDropMenu" />
+    <contant-comp class="mb-4" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"/>
+    <GameDetails v-if="gameDetailsShow" :gameId="gameId"/>
+    <footer-comp/>
   </div>
 
 </template>
@@ -18,7 +20,9 @@ import "bootstrap"
 import HeaderComp from './components/HeaderComp.vue';
 import FilterNav from './components/FilterNav.vue';
 import ContantComp from './components/ContantComp.vue';
-
+import FooterComp from './components/FooterComp.vue';
+import PageNumbering from './components/PageNumbering.vue';
+import GameDetails from "./components/gameDetails.vue";
 
 
 export default {
@@ -27,8 +31,11 @@ export default {
     // HelloWorld,
     HeaderComp,
     FilterNav,
-    ContantComp
-  },
+    ContantComp,
+    FooterComp,
+    PageNumbering,
+    GameDetails
+},
   data(){
     return {
       gamesArr:[],
@@ -37,7 +44,12 @@ export default {
       },
       filtr:'',
       filtrArr:[],
-      updateKey:0
+      updateKey:0,
+
+      pageNumber:[0,12],
+
+      gameId:0,
+      gameDetailsShow: true
     }
   },
   methods: {
@@ -55,67 +67,28 @@ export default {
             await fetch(this.url, options)
             .then(res => res.json())
             .then(res => this.gamesArr.push(...res))
-
-      
       return arr
-   },
-  //  getDropMenu(e){
-  //   function addFiltr(str){
-  //       let url = this.filtr;
-  //       if(url === ''){
-  //         url = '?'
-  //       }else {
-  //         this.url.search(str.split('='))
-  //       }
+    },
+    getDropMenu(e){
+      this.filtr = e
+      console.log('APP', e)
+      this.updateKey++
+    },
+        
 
-  //       url += str;
-  //       console.log(url)
-  //       this.updateKey++
-  //       return url
-  //   }
-  //   switch(e.target.dataset.drop) {
-  //     case 'browser':
-  //       this.filtr = addFiltr.call(this,'platform=browser')
-  //       break;
-  //       case 'pc':
-  //       this.params.platform = 'pc'
-  //       this.filtr = addFiltr.call(this,'pc')
-  //       break;
-  //     }
-  //     console.log(e.target.dataset.drop)
-  //   },
-  getDropMenu(e){
-    //     function addFiltr(str){
-    //     let basicUrl = this.filtr
-    //     if(basicUrl.includes(str))return
-    //     let index = basicUrl.findIndex((value) => {
-    //         return value.split('=')[0] === str.split('=')[0]
-    //     });
-    //     if (index != -1){
-    //         console.log(basicUrl[index].split('=')[1])
-    //         basicUrl[index].split('=')[1] = str.split('=')[1];
-    //         basicUrl[index] = str;
-    //     }else{
-    //         basicUrl.push(str)
-    //     }
-    //     this.filtr = basicUrl
-    //     this.updateKey++
-    // }
-    // this.filtr = e.target.dataset.drop
-    // this.updateKey++
-    let arr = [...e]
-    console.log(1)
-      if(!e.includes('?')){
-          e.unshift('?')
-      }
-      arr = arr.join('')
-      // e.length > 2? e.join('=') : e.join('')
-      console.log('test',arr)
+    imageSelect(e){
+      let gameId = e.target.dataset.id
+      if (!gameId) return
+      console.log(gameId)
+      this.gameId = gameId
+      this.gameDetailsShow? this.gameDetailsShow = false : this.gameDetailsShow = true    
+    }
+      
   },
 
 
 
-  },
+
 
   created(){
 
