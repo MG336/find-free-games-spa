@@ -1,32 +1,42 @@
 <template>
-        <div class="con-wrap">
-            <div class="container">
-                <div class="con-cards" @click="$emit('gameSelect', $event)">
-                    <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
-                        <div class="card con-cards__card">
-                            <a class="con-cards__link" href="#" :data-id="item.id"></a>
-                            <img :src="item.thumbnail" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                
-                                <h5 class="card-title">{{item.title}}</h5>
-                                <p class="card-text">{{item.short_description}}</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Genre: {{item.genre}}</li>
-                                    <li class="list-group-item">Release date: {{item.release_date}}</li>
-                                    <li class="list-group-item">Platform: {{item.platform}}</li>
-                            </ul>
-                        </div>
-                    </template>
-                </div>
-                       
-                       
-                <div class="container d-flex justify-content-center mt-4 mb-5">
-                <button type="button" class="btn btn-light" @click="pages+=12">Show More</button>
-                </div>
-            </div>
-            
+    <div class="game-loading" v-if="loading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">loading...</span>
         </div>
+    </div>
+
+    <div class="game-loading" v-if="error">
+       <h1>Error</h1>
+    </div>  
+
+    <div class="container" v-if="post">
+        <div class="con-card" @click="$emit('gameSelect', $event)">
+            <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
+                <div class="card con-card__card ">
+                    <a class="con-card__link" href="#" :data-id="item.id"></a>
+                    <img :src="item.thumbnail" class="card-img-top" alt="thumbnail">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase text-primary fw-bold">{{item.title}}</h5>
+                        <p class="card-text">{{item.short_description}}</p>
+                    </div>
+                        
+                    <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Genre: {{item.genre}}</li>
+                            <li class="list-group-item">Platform: {{item.platform}}</li>
+                            <li class="list-group-item">Release date: {{item.release_date}}</li>
+                    </ul>
+                </div>
+            </template>
+        </div>
+        <div class="container d-flex justify-content-center mt-4 mb-5">
+        <button type="button" class="btn btn-dark-light text-primary" @click="pages+=12">Show More</button>
+        </div>
+    </div>
+
+                            
+                       
+                       
+            
 
             
   </template>
@@ -42,38 +52,55 @@
             },
                 
             emits:["gameSelect"],
-            
+      
             data(){
                 return {
-                    params: {
-                        platform:'platform=browser'
-                    },
-                    // url:this.gamesUrl,
-                    url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
                     gamesArr:[],
+                    pages: 3,
+
+                    error:null,
+                    loading: false,
+                    post: null,
+                }
+            },
+
                     
-                    options: {
+                   
+                    
+            methods: {
+                async getJsonFromServer(){
+                   this.error = this.post = null; 
+                   this.loading = true;
+
+                   let url = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
+
+                    const options = {
                         method: 'GET',
                         headers: {
                             'X-RapidAPI-Key': '149ec3339amsha0518ee016e5238p1b47fdjsn88e4cd783202',
                             'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
                         }
-                    },
-                    
-                    pages: 3
-                }
-            },
-            methods: {
-                async getJsonFromServer(){
-                        let url = this.url + this.filtr
-                        console.log('11111111111',url)
-                        await fetch(url, this.options)
-                        .then(res =>{return res.json()})
-                        // .then(res => res.slice(0,12))
-                        .then(res => this.gamesArr.push(...res))
-                        // .then(res => this.gamesArr.push(...res))
-                    },
+                    };
+
+                    url = url + this.filtr;
+                    await fetch(url, options)
+                        .then(res =>{
+                        return res.ok? res.json() : Promise.reject(res)
+                        })
+                        .then(res => {
+                            console.log(res)
+                            this.post = true;
+                            this.loading = false;
+                            this.gamesArr.push(...res)
+                        })
+                        .catch(()=>{
+                            this.loading = null;
+                            this.error = true;
+                        })
                 },
+            },
+
+                    
 
                           
 
@@ -86,11 +113,17 @@
   </script>
 <!-- lang="scss" -->
   <style lang="scss">
-    .con-cards{
+    @import "../style/main.scss";
+    .con-card{
         position: relative;
         display: grid;
         gap:1rem;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+        
+        @include media-breakpoint-up(lg) { 
+            grid-template-columns: repeat(3, 1fr)
+        }
+
         &__link{
             position: absolute;
             width: 100%;
@@ -102,6 +135,9 @@
         }
         &__card{
             // cursor: pointer;
+            // background-color: $dark-light !important;
         }
     }
+  
+
   </style>

@@ -1,21 +1,34 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <div class="container">
-    <!-- dropMenu -->
-    <header-comp class="mb-3" />
-    <filter-nav  class="mb-2" @filtr-send="getDropMenu" />
-    <contant-comp class="mb-4" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"/>
-    <GameDetails v-if="gameDetailsShow" :gameId="gameId"/>
-    <footer-comp/>
-  </div>
+ 
 
+  
+  <div class="d-flex flex-column min-vh-100">
+  <header-comp class="mb-4" @loginForm="loginFormToggle"/>
+  <login-form v-if="login">
+    <div class="game-form__close" type="button" @click="login=false">
+    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1L20 20" stroke="#579AFF" stroke-width="0.558824"/>
+    <path d="M20 1L0.999999 20" stroke="#579AFF" stroke-width="0.558824"/>
+    </svg>
+    </div>
+  </login-form>
+  <filter-nav  class="mb-4 mt-4" v-if="!gameDetailsShow" @filtr-send="getDropMenu" />
+  <!-- <contant-comp class="mb-4" v-if="!gameDetailsShow" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"/> -->
+  <GameDetails class="mt-4" v-if="gameDetailsShow" :gameId="gameId" @close="gameDetailsShow=false"/> 
+  <footer-comp class="mt-auto"/>
+  </div>
+  
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+
+
+
+// import './style/main.scss';
+
 
 import HeaderComp from './components/HeaderComp.vue';
 import FilterNav from './components/FilterNav.vue';
@@ -23,6 +36,8 @@ import ContantComp from './components/ContantComp.vue';
 import FooterComp from './components/FooterComp.vue';
 import PageNumbering from './components/PageNumbering.vue';
 import GameDetails from "./components/gameDetails.vue";
+import LoginForm from "./components/LoginForm.vue";
+
 
 
 export default {
@@ -34,7 +49,9 @@ export default {
     ContantComp,
     FooterComp,
     PageNumbering,
-    GameDetails
+    GameDetails,
+    LoginForm,
+
 },
   data(){
     return {
@@ -48,8 +65,10 @@ export default {
 
       pageNumber:[0,12],
 
-      gameId:0,
-      gameDetailsShow: true
+      gameId: 0,
+      gameDetailsShow: false,
+
+      login: false
     }
   },
   methods: {
@@ -82,6 +101,14 @@ export default {
       console.log(gameId)
       this.gameId = gameId
       this.gameDetailsShow? this.gameDetailsShow = false : this.gameDetailsShow = true    
+    },
+
+    loginFormToggle(e){
+      if(e === 'login'){
+        console.log(this.login)
+       this.login = this.login? false : true
+      }
+
     }
       
   },
@@ -108,8 +135,12 @@ export default {
      
 </script>
 
-<style>
+<style lang="scss">
+  // @import './style/var.scss';
 
+  body{
+    background-color: red;
+  }
 </style>
           
                     
