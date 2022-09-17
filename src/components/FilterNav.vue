@@ -1,5 +1,5 @@
 <template>
-  <div class="container navbar navbar-expand-lg navbar-dark filter-nav rounded-2 bg-dark-light">
+  <div class="container navbar navbar-expand-lg navbar-dark filter-nav rounded-2 bg-dark-light my-4">
         <div class="container">
           <button class="game-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="d-flex align-items-center">

@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-dark game-nav">
+<nav class="navbar navbar-expand-lg navbar-dark game-nav bg-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="#">
       <img src="../assets/img/Logo.png">
@@ -18,34 +18,18 @@
         </clipPath>
         </defs>
         </svg>
-
-      </span>
+        </span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link ">Link3</a>
-        </li>
-
-      </ul> -->
 
       <ul class="navbar-nav ms-auto text-light" @mousedown.prevent @click="$emit('loginForm',$event.target.dataset.form)">
-        <li class="nav-item me-2 py-3 py-md-0">
-            <a class="nav-link text-primary-dark hover-text" type="button" data-form="login">Log in</a>
+        <li class="nav-item me-2 py-3 py-md-0 navbar-collapse" >
+            <a class="nav-link text-primary-dark hover-text" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"  type="button" data-form="login">Log in</a>
         </li>
           
  
         <li class="nav-item">
-          <a class="nav-link btn btn-outline-primary" data-form="joinFree">Join Free</a>
+          <a class="nav-link btn btn-outline-primary" data-form="joinForm" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Join Free</a>
         </li>
       </ul>
 
@@ -60,16 +44,11 @@
       </div>
   </div>
   </div>
-  
 </template>
+  
 <script>
   export default{
     emits:['loginForm'],
-    // {
-    //   loginForm(e){
-    //     return e? true : null
-    //   }
-    // },
     data(){
       return {
       }
@@ -79,14 +58,13 @@
 </script>
 
 <style lang="scss">
-
+  @import "../style/main.scss";
 
   .game-nav{
-    // min-height:72px;
     z-index: 10;
-    position: relative;
-    background-color: black;
+    // position: fixed ;
   }
+
   .header{
     height: 320px;
     justify-content: left;
@@ -96,8 +74,10 @@
     background-size: cover;
     background-image:  url(../assets/img/bg2.jpg);
     background-position: center;
+    @include media-breakpoint-down(md){
+        background-position: -550px 100%;
+    }
     &__titleBox {
-      // max-width:400px;
       top: 30%;
       left: 50%;
     }

@@ -1,0 +1,122 @@
+$primary: #579AFF;
+$primary-dark: #3e81e6d2;
+$primary-dark-2: #1b3b6a;
+
+$secondary: #FE2722;
+$dark: #030217;
+$dark-light: #17162e;
+$light: #ffffff;
+$light-dark: #8E8CAA; 
+
+//colors
+$theme-colors: (
+  "primary":$primary,
+  "primary-dark": $primary-dark,
+  "primary-dark2": $primary-dark-2,
+  "secondary": $secondary,
+  "light": $light,
+  "dark": $dark,
+  "dark-light": $dark-light,
+  "light-dark": $light-dark
+)!default;
+
+// Cards
+$card-bg: $dark-light;
+$card-color: $light-dark;
+$card-cap-bg: $dark-light;                 
+$card-cap-color: $light-dark;
+
+.card-body{
+  border: none !important;
+  border-bottom: 1px solid $primary-dark-2 !important;
+}
+
+
+//list
+$list-group-bg: $dark-light;
+$list-group-color: $light-dark;
+$list-group-border-color: $primary-dark-2;
+
+//BTN 
+.navbar-toggler{
+  border: none !important;
+  &:focus,:active, :hover{
+    border: none !important;
+  }
+}
+//Form
+$input-btn-focus-color: black;
+
+// @import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
+
+
+
+//Font-size
+$h7-font-size: $font-size-base * .7;
+$addSize: (
+  7: $h7-font-size
+);
+
+$font-sizes: map-merge($addSize, $font-sizes);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Animation
+
+
+.game-loading{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+//Form
+.form-control{
+  border: 1px solid $primary-dark;
+  background-color: transparent;
+  caret-color: $primary;
+  
+  &:focus{
+    border: 1px solid $primary;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.hover-text{
+  &:hover{
+    color: $secondary !important;
+  }
+}
+
+.game-toggler {
+  margin-left: auto;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  @include media-breakpoint-up(lg) {
+    display: none;
+  }
+}
+
+
+.btn-outline-primary{
+  color: $primary;
+  &:hover{
+    border-color: $secondary;
+    background-color: $secondary;
+  }
+  &:visited, :focus{
+    border-color: $primary;
+    background-color: $primary;
+  }
+}
+
+body{
+  background-color:$dark;
+}

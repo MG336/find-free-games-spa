@@ -2,13 +2,13 @@
     <div class="bg-dark-light">
         <div class="footer container">
             <div class="footer__contant">
-                <span class="footer__copy text-secondary "> 
+                <span class="footer__copy text-light-dark"> 
                     © Designed & Built by
-                    <a class="footer__link" href="https://mg1010.art" target="_blank">Mikhail Gorbunov</a>, 2022
+                    <a class="footer__link text-primary-dark" href="https://mg1010.art" target="_blank">Mikhail Gorbunov</a>, 2022
                 </span>
                 <div class="footer__source">
-                        <span class="text-secondary me-1">API source:</span>
-                        <a class="d-block footer__link" href="https://www.freetogame.com/" target="_blank">freetogame.com</a>
+                        <span class=" me-1 text-light-dark">API source:</span>
+                        <a class="d-block footer__link text-primary-dark" href="https://www.freetogame.com/" target="_blank">freetogame.com</a>
                 </div>
             </div>
             <div class="footer__icons">
@@ -30,14 +30,10 @@
             </div>
         </div>
     </div>
-      
-
-
-
 </template>
 <script>
-
 </script>
+
 <style lang="scss">
     @import "../style/main.scss";
     .footer{
@@ -47,8 +43,7 @@
         justify-content: start;
         &__contant{
             display: flex;
-            // gap: 20px;
-            font-size: 10px;
+            font-size: 12px;
             flex-direction: column;
         }
         &__source{
@@ -64,7 +59,13 @@
         }
         &__link{
             text-decoration: none;
-            color: $light-dark;
+            &:hover{
+                color: $secondary !important;
+            }
         }
     }
 </style>
+      
+
+
+

@@ -1,7 +1,8 @@
 <template>
+    <div class="">
     <div class="game-loading" v-if="loading">
         <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Загрузка...</span>
+            <span class="visually-hidden">loading...</span>
         </div>
     </div>
 
@@ -21,8 +22,8 @@
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 mt-4 gx-5 mb-5">
-            <div class="col-12 col-md-8 ">
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="col-12 col-md-8" >
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" v-if="images.length > 0">
                 <div class="carousel-inner">
                     <div :class="['carousel-item', index === 0? 'active' : '']" v-for="(item,index) in images" :key="item.id">
                     <img :src="item.image" class="d-block w-100" alt="...">
@@ -49,7 +50,7 @@
 
 
             <div class="col-12 col-md-4">
-                <div class="p-3 border border-primary-dark mt-4 mt-lg-0 ">
+                <div class="p-3 border border-primary-dark mt-4 mt-lg-0" v-if="systemRequirements">
                         <h3 class="fs-5 mb-3 text-primary-dark text-uppercase fw-bold">Minimum system requirements:</h3>
                         <span class="fs-6 text-primary-dark">OS</span>
                         <p class="mt-1 text-light-dark">{{systemRequirements.os}}</p>
@@ -64,7 +65,14 @@
                         <p class="text-light-dark">{{systemRequirements.processor}}</p>
              
                 </div>
-                       
+                <div class="border border-primary-dark p-3 mt-3" v-if="!systemRequirements">
+                    <div class="">
+                            <span class="fs-6 text-primary-dark">Platform:</span>
+                            <span class="text-light-dark">{{' '+game.platform}}</span>
+                    </div>
+                </div>    
+        
+
                 <div class="border border-primary-dark p-3 mt-3">
                     <div class="">
                             <span class="fs-6 text-primary-dark">Genre:</span>
@@ -82,12 +90,13 @@
             </div>
         </div>
     </div>
+</div>    
 </template>
 
 <script>
 export default {
     props:{
-        gameId: Number
+        gameId: String
     },
     emits:['close'],
     data(){
@@ -134,12 +143,15 @@ export default {
         }
     },
     created(){
+        console.log(this.gameId)
         this.fetchData()
     }
 }
 </script>
 
 <style lang="scss">
+
+
     .game-container{
         max-width: 800px;
         margin: 0 auto;
