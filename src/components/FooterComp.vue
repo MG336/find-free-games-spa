@@ -4,7 +4,7 @@
             <div class="footer__contant">
                 <span class="footer__copy text-light-dark"> 
                     © Designed & Built by
-                    <a class="footer__link text-primary-dark" href="https://mg1010.art" target="_blank">Mikhail Gorbunov</a>, 2022
+                    <a class="footer__link text-primary-dark" href="https://mg1010.com" target="_blank">Mikhail Gorbunov</a>, 2022
                 </span>
                 <div class="footer__source">
                         <span class=" me-1 text-light-dark">API source:</span>
