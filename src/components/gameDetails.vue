@@ -140,11 +140,15 @@ export default {
                 this.loading = null;
                 this.error = true;
             }); 
+        },
+        rout(){
+            console.log(this.$route.params)
         }
     },
     created(){
         console.log(this.gameId)
         this.fetchData()
+        this.rout()
     }
 }
 </script>

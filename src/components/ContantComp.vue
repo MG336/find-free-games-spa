@@ -1,4 +1,5 @@
 <template>
+
     <div class="game-loading" v-if="loading">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">loading...</span>
@@ -8,14 +9,17 @@
     <div class="game-loading" v-if="error">
         <h1>Error</h1>
     </div>
-
+    <router-link to="/detail">Ditail</router-link>
     <div class="container" v-if="post">
         
         <div class="con-card" @click="$emit('gameSelect', $event)">
             
                 <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
                     <div class="card con-card__card anim-grow">
-                        <a class="con-card__link" href="#" :data-id="item.id"></a>
+                        
+                        <a class="con-card__link" href="#" :data-id="item.id">
+                            
+                        </a>
                         <img :src="item.thumbnail" class="card-img-top"
                             alt="thumbnail">
                         <div class="card-body">
@@ -40,9 +44,9 @@
             <button type="button" class="btn btn-dark-light text-primary"
                 @click="pages+=9">Show More</button>
         </div>
+    </div>
 
         
-    </div>
 </template>
 
 <script>

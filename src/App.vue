@@ -26,7 +26,7 @@
     
     <scroll-to-top/>
   </div>
-  
+  <!-- <router-view></router-view> -->
 </template>
 
 <script>
@@ -35,11 +35,12 @@ import FilterNav from './components/FilterNav.vue';
 import ContantComp from './components/ContantComp.vue';
 import FooterComp from './components/FooterComp.vue';
 import PageNumbering from './components/PageNumbering.vue';
-import GameDetails from "./components/gameDetails.vue";
+import GameDetails from "./components/GameDetails.vue";
 import LoginForm from "./components/LoginForm.vue";
 import JoinForm from "./components/JoinForm.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
 import ScrollToTop from './components/ScrollToTop.vue';
+
 
 export default {
   name: 'App',
