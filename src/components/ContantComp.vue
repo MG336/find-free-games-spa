@@ -9,14 +9,13 @@
     <div class="game-loading" v-if="error">
         <h1>Error</h1>
     </div>
-    <router-link to="/detail">Ditail</router-link>
     <div class="container" v-if="post">
         
         <div class="con-card" @click="$emit('gameSelect', $event)">
             
                 <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
                     <div class="card con-card__card anim-grow">
-                        
+                       
                         <a class="con-card__link" href="#" :data-id="item.id">
                             
                         </a>
@@ -63,7 +62,7 @@ export default {
     data() {
         return {
             gamesArr: [],
-            pages: 9,
+            pages: 3,
 
             error: null,
             loading: false,
@@ -105,6 +104,9 @@ export default {
     },
     
     created() {
+        this.$router.push('/')
+        console.log(this.$route)
+
         this.getJsonFromServer()
     }
 }

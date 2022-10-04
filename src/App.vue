@@ -20,7 +20,7 @@
 
     <!-- Contant -->
     <contant-comp v-if="!gameDetailsShow" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"/>
-    <GameDetails  v-if="gameDetailsShow" :gameId="gameId" @close="gameDetailsShow=false"/> 
+    <game-details v-if="gameDetailsShow" :gameId="gameId" @close="gameDetailsShow=false"/> 
 
     <footer-comp class="mt-auto"/>
     

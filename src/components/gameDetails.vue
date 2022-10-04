@@ -141,14 +141,13 @@ export default {
                 this.error = true;
             }); 
         },
-        rout(){
-            console.log(this.$route.params)
-        }
+
     },
     created(){
-        console.log(this.gameId)
+        // console.log(this.gameId),
+        this.$router.push('detail')
+        console.log(this.$route)
         this.fetchData()
-        this.rout()
     }
 }
 </script>
