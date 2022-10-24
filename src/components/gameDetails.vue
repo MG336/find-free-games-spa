@@ -14,7 +14,8 @@
         
         <div class="bg-dark-light d-flex justify-content-between align-items-center text-bg-secondary px-3 py-3 round-2 rounded-3 ">
             <h1 class="text-uppercase fs-5 m-0 fw-bold text-primary">{{game.title}}</h1>
-                <svg class="" role="button" @click="$emit('close')"
+                <svg class="" role="button" @click="close"
+
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 fill="#579AFF" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
@@ -94,9 +95,10 @@
 </template>
 
 <script>
+
 export default {
     props:{
-        gameId: String
+        // gameId: {String, Number}
     },
     emits:['close'],
     data(){
@@ -104,6 +106,7 @@ export default {
             game:{},
             systemRequirements:{},
             images:[],
+            gameId: this.$route.params.id,
 
             loading: false,
             post: null,
@@ -114,8 +117,7 @@ export default {
         async fetchData(){
             this.error = this.post = null;
             this.loading = true;
-            let url = 'https://free-to-play-games-database.p.rapidapi.com/api/game?id='+String(this.gameId);
-            
+            let url = 'https://free-to-play-games-database.p.rapidapi.com/api/game?id=' + String(this.gameId);
             let options = {
                 method: 'GET',
                headers: {
@@ -141,12 +143,20 @@ export default {
                 this.error = true;
             }); 
         },
+        close(){
+            this.$router.go(-1)
+        }
 
     },
+    watch: {
+        // $route(to, from){
+        //     console.log(1111)
+        //     this.fetchData()
+        // }
+    },        
     created(){
-        // console.log(this.gameId),
-        this.$router.push('detail')
-        console.log(this.$route)
+        console.log('gameId',this.gameId)
+        // this.$router.push(`/${this.gameId}`)
         this.fetchData()
     }
 }

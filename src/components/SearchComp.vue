@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <div class="row row-cols-2  bg-dark-light d-flex justify-content-between align-items-center text-bg-secondary px-3 py-3 round-2 rounded-3 mt-4">
-                    <div class="col-lg-6 col-10" >
-                        <input class="form-control text-primary col-4" type="search" v-model="searchValue" id="" name="" placeholder="Find Games">
+                    <div class="col-lg-5 col-10" >
+                        <input class="form-control text-primary col-4" type="search" v-model="searchValue" id="" name="" placeholder="Find Game">
                     </div>   
 
                     <div class="col-1 col-md-auto d-flex ustify-content-end">
@@ -79,7 +79,6 @@ export default{
                 .catch(() => {
 
                 })
-                console.log(this.gamesArr)
         },
         search(value){
             if(!value) return []
@@ -96,7 +95,6 @@ export default{
     },
     watch:{
         searchValue(e){
-            console.log(e)
             this.search(e)
           
         }

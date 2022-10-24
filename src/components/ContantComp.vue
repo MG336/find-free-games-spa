@@ -6,77 +6,85 @@
         </div>
     </div>
 
+    <filter-nav  @filtr-send="getDropMenu"/>
+
     <div class="game-loading" v-if="error">
         <h1>Error</h1>
     </div>
     <div class="container" v-if="post">
         
         <div class="con-card" @click="$emit('gameSelect', $event)">
-            
-                <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
-                    <div class="card con-card__card anim-grow">
-                       
-                        <a class="con-card__link" href="#" :data-id="item.id">
-                            
-                        </a>
-                        <img :src="item.thumbnail" class="card-img-top"
-                            alt="thumbnail">
-                        <div class="card-body">
-                            <h5
-                                class="card-title text-uppercase text-primary fw-bold">
-                                {{item.title}}</h5>
-                            <p class="card-text">{{item.short_description}}</p>
-                        </div>
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Genre: {{item.genre}}</li>
-                            <li class="list-group-item">Platform: {{item.platform}}
-                            </li>
-                            <li class="list-group-item">Release date:
-                                {{item.release_date}}</li>
-                        </ul>
+            <template v-for="item in gamesArr.slice(0,pages)" :key="item.id">
+                <div class="card con-card__card anim-grow">
+                   
+                    <a class="con-card__link" @click.prevent href="#" :data-id="item.id">
+                        
+                    </a>
+                    <img :src="item.thumbnail" class="card-img-top"
+                        alt="thumbnail">
+                    <div class="card-body">
+                        <h5
+                            class="card-title text-uppercase text-primary fw-bold">
+                            {{item.title}}</h5>
+                        <p class="card-text">{{item.short_description}}</p>
                     </div>
-                </template>
-            </div>
-           
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Genre: {{item.genre}}</li>
+                        <li class="list-group-item">Platform: {{item.platform}}
+                        </li>
+                        <li class="list-group-item">Release date:
+                            {{item.release_date}}</li>
+                    </ul>
+                </div>
+            </template>
+    </div>
         <div class="container d-flex justify-content-center mt-4 mb-5">
             <button type="button" class="btn btn-dark-light text-primary"
                 @click="pages+=9">Show More</button>
         </div>
     </div>
+            
+           
 
         
 </template>
 
 <script>
+import filterNav from './FilterNav.vue'
 export default {
     name: 'ContantComp',
     props: {
         gamesUrl: String,
-        filtr: String,
         showPage: Array,
+        
     },
-
+    components: {
+        filterNav
+    },
     emits: ["gameSelect"],
 
     data() {
         return {
             gamesArr: [],
-            pages: 3,
+            pages: 12,
 
             error: null,
             loading: false,
             post: null,
+
+            filtr: ''
         }
     },
 
 
     methods: {
-        async getJsonFromServer() {
+        async getJsonFromServer(filtr) {
             this.error = this.post = null;
             this.loading = true;
 
             let url = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
+            // let url = 'https://www.freetogame.com/api/games';
 
             const options = {
                 method: 'GET',
@@ -86,7 +94,7 @@ export default {
                 }
             };
 
-            url = url + this.filtr;
+            url = url + filtr;
             await fetch(url, options)
                 .then(res => {
                     return res.ok ? res.json() : Promise.reject(res)
@@ -94,6 +102,7 @@ export default {
                 .then(res => {
                     this.post = true;
                     this.loading = false;
+                    
                     this.gamesArr.push(...res)
                 })
                 .catch(() => {
@@ -101,13 +110,14 @@ export default {
                     this.error = true;
                 })
         },
+        getDropMenu(e){
+            this.filtr = e;
+            this.gamesArr = [];
+            this.getJsonFromServer(this.filtr)
+        },
     },
-    
     created() {
-        this.$router.push('/')
-        console.log(this.$route)
-
-        this.getJsonFromServer()
+        this.getJsonFromServer('')
     }
 }
 

@@ -124,7 +124,6 @@ export default{
             align-items: center;
             flex-direction: column;
             gap:20px;
-            // height: 100%;
            max-width: 400px;
            padding: 40px; 
            border-radius: 8px;

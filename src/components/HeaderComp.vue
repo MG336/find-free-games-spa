@@ -22,16 +22,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
 
-      <ul class="navbar-nav ms-auto text-light" @mousedown.prevent @click="$emit('loginForm',$event.target.dataset.form)">
+      <ul class="navbar-nav ms-auto text-light my-nav" @mousedown.prevent @click="$emit('loginForm',$event.target.dataset.form)">
+
+        <li class="nav-item me-2 py-3 py-md-0 navbar-collapse icon-search" type="button">
+          <router-link to="/search">
+          <svg class="icon-search bi bi-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#579AFF"  viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+          </router-link>
+        </li>
+
         <li class="nav-item me-2 py-3 py-md-0 navbar-collapse" >
             <a class="nav-link text-primary-dark hover-text" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"  type="button" data-form="login">Log in</a>
         </li>
-          
- 
+        
         <li class="nav-item">
           <a class="nav-link btn btn-outline-primary" data-form="joinForm" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Join Free</a>
         </li>
       </ul>
+ 
 
     </div>
   </div>
@@ -53,16 +62,22 @@
       return {
       }
     },
+    methods:{
+
+    }
 
   }
 </script>
 
 <style lang="scss">
   @import "../style/main.scss";
-
+  .icon-search {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
   .game-nav{
     z-index: 10;
-    // position: fixed ;
   }
 
   .header{

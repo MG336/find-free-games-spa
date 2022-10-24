@@ -9,10 +9,10 @@
               </span>
           </button>
           <div class="collapse navbar-collapse game-navbar" id="navbarNavDarkDropdown">
-            <ul class="navbar-nav game-navbar ">
+            <ul class="navbar-nav game-navbar" >
               <!-- dropdown 1-->
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle game-navbar__text" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle game-navbar__text" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                     Platform
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark game-navbar__dropdown" aria-labelledby="navbarDarkDropdownMenuLink"  @click="createFilter">
@@ -67,9 +67,6 @@
     },
 
     methods: {
-      getDropMenu(e){
-        console.log(e)
-      },
       createFilter(e){
         let data = e.target.dataset.drop
         let result = this.filtrResult
@@ -81,7 +78,6 @@
         });
 
         if (index != -1){
-            console.log(result[index].split('=')[1])
             result[index].split('=')[1] = data.split('=')[1];
             result[index] = data;
         }else{
@@ -115,6 +111,7 @@ created(){
       
     .game-navbar{
       &__text{
+        cursor: pointer;
         color: $primary-dark !important;
       }
 

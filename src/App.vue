@@ -16,17 +16,26 @@
     
     
     <!-- Nav -->
-    <filter-nav  v-if="!gameDetailsShow" @filtr-send="getDropMenu" />
+  
 
     <!-- Contant -->
-    <contant-comp v-if="!gameDetailsShow" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"/>
-    <game-details v-if="gameDetailsShow" :gameId="gameId" @close="gameDetailsShow=false"/> 
+    <!-- <contant-comp v-if="!gameDetailsShow" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"/> -->
+    <!-- <game-details v-if="gameDetailsShow" :gameId="gameId" @close="gameDetailsShow=false"/> -->
+
+
+    <!-- <router-view name="contant" v-if="!gameDetailsShow" :key="updateKey" :filtr="filtr" :showPage="pageNumber" @gameSelect="imageSelect"></router-view> -->
+    <!-- <router-view name="detail" v-if="gameDetailsShow"  :gameId="gameId" @close="gameDetailsShow=false"></router-view>  -->
+    <!-- <filter-nav  v-if="!gameDetailsShow" @filtr-send="getDropMenu"/> -->
+
+    <router-view name="contant" :showPage="pageNumber" @gameSelect="imageSelect"></router-view>
+    <router-view name="detail" :gameId="gameId" @close="gameDetailsShow=false"></router-view> 
+    <router-view name="search" @gameSelect="imageSelect"></router-view>
+
 
     <footer-comp class="mt-auto"/>
     
     <scroll-to-top/>
   </div>
-  <!-- <router-view></router-view> -->
 </template>
 
 <script>
@@ -40,7 +49,7 @@ import LoginForm from "./components/LoginForm.vue";
 import JoinForm from "./components/JoinForm.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
 import ScrollToTop from './components/ScrollToTop.vue';
-
+import SearchComp from './components/SearchComp.vue';
 
 export default {
   name: 'App',
@@ -55,7 +64,9 @@ export default {
     JoinForm,
     ForgotPassword,
     ScrollToTop,
+    SearchComp
 },
+
 metaInfo: {
   title: 'Find the best free-to-play games!'
 },
@@ -71,7 +82,7 @@ metaInfo: {
 
       pageNumber:[0,12],
 
-      gameId: 0,
+      gameId: this.$route.params.id,
       gameDetailsShow: false,
 
       login: false,
@@ -96,17 +107,21 @@ metaInfo: {
             await fetch(this.url, options)
             .then(res => res.json())
             .then(res => this.gamesArr.push(...res))
-      return arr
+            return arr
     },
     getDropMenu(e){
       this.filtr = e
       this.updateKey++
     },
         
+    test(){
+      this.$router.push({ path: '/img/1' })
+    },
 
-    imageSelect(e){
+   imageSelect(e){
       let gameId = e.target.dataset.id
       if (!gameId) return
+      this.$router.push({ path: `/img/${gameId}` })
       this.gameId = gameId
       this.gameDetailsShow? this.gameDetailsShow = false : this.gameDetailsShow = true    
     },
@@ -123,8 +138,12 @@ metaInfo: {
     },
     
   },
-}
-          
+  watch:{
+  }
+  }          
+    
+  
+
 
 </script>
 
